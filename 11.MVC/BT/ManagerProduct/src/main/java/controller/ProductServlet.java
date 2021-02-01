@@ -39,17 +39,17 @@ public class ProductServlet extends HttpServlet {
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        Product product = this.productService.findProductbById(id);
+        Product product = this.productService.findProductById(id);
         RequestDispatcher dispatcher;
         if (product == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         }else {
             this.productService.removeProduct(id);
-            try {
-                response.sendRedirect("/product");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        }
+        try {
+            response.sendRedirect("/product");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -59,7 +59,7 @@ public class ProductServlet extends HttpServlet {
         double price = Double.parseDouble(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        Product product = this.productService.findProductbById(id);
+        Product product = this.productService.findProductById(id);
         RequestDispatcher dispatcher;
         if (product ==  null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
@@ -125,7 +125,7 @@ public class ProductServlet extends HttpServlet {
 
     private void showDelete(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        Product product = this.productService.findProductbById(id);
+        Product product = this.productService.findProductById(id);
         RequestDispatcher dispatcher;
         if (product == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
@@ -145,7 +145,7 @@ public class ProductServlet extends HttpServlet {
 
     private void showEdit(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        Product product = this.productService.findProductbById(id);
+        Product product = this.productService.findProductById(id);
         RequestDispatcher dispatcher;
         if(product == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");

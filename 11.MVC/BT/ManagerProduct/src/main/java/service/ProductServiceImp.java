@@ -38,7 +38,8 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Product findProductbById(int id) {
+    public Product findProductById(int id) {
         return productMap.get(id);
     }
+
 }

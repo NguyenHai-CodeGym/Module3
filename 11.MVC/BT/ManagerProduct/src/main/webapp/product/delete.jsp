@@ -20,7 +20,7 @@
             </tr>
             <tr>
                 <td>Price: </td>
-                <td>${requestScope["products"].Price()}</td>
+                <td>${requestScope["products"].getPrice()}</td>
             </tr>
             <tr>
                 <td>Quantity: </td>
