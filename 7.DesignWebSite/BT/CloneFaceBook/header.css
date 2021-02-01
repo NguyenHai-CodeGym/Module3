@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+}
+/* header left */
+.header .header-left {
+  width: 33.3%;
+  display: flex;
+}
+
+.header .header-left img {
+  width: 15%;
+}
+.header .header-left #search input {
+  background-color: #f0f2f5;
+  border: none;
+  width: 136%;
+  height: 78%;
+  margin-top: 5%;
+  border-radius: 18px;
+}
+/* header center */
+.header .header-center {
+  width: 33.3%;
+  margin-top: 1%;
+}
+
+.header .header-center .fas {
+  font-size: 158%;
+  margin-left: 11%;
+}
+/* header right */
+.header .header-right {
+  width: 33.3%;
+  background-color: blue;
+}
