@@ -19,6 +19,7 @@
         <td>Name</td>
         <td>Email</td>
         <td>Address</td>
+        <td>Country</td>
         <td>Edit</td>
         <td>Delete</td>
     </tr>
@@ -27,6 +28,7 @@
         <td>${customer.name}</td>
         <td>${customer.email}</td>
         <td>${customer.address}</td>
+        <td>${customer.province.province}</td>
         <td><a href='editCustomer?id=${customer.id}'>Edit</a></td>
         <td><a href="deleteCustomer?id=${customer.id}">Delete</a></td>
     </tr>

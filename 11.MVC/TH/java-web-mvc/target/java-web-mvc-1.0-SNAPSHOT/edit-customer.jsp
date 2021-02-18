@@ -25,6 +25,18 @@
     <input type="email" name="email" value='${customer.email}'><br>
     <label>Address</label></br>
     <input type="text" name="address" value='${customer.address}'><br>
+    <label>Country</label><br>
+    <select name="country" id="country">
+        <c:forEach var="country" items='${countries}'>
+            <c:if test='${country.id == customer.province.id}'>
+                <option value='${country.id}' selected>${country.province}</option>
+            </c:if>
+            <c:if test='${country.id != customer.province.id}'>
+                <option value='${country.id}'>${country.province}</option>
+            </c:if>
+
+        </c:forEach>
+    </select><br>
     <input type="reset" name="Reset" value="Reset"><input type="submit" name="Submit" value="Submit"><br>
 </form>
 </body>
