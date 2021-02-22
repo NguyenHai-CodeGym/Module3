@@ -3,9 +3,7 @@ package service;
 import model.Country;
 import model.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +11,9 @@ public class UserServiceIpml implements UserService {
     ConService conService = new ConService();
 
     protected final String SELECT_ALL = "SELECT user.*, country.name as countryName, country.id as countryId from user left join country on  user.country_id = country.id ";
-    protected final String INSERT_INTO = "insert into `user`(name, email, country_id) values(?,?,?)";
+    protected final String INSERT_INTO = "call sp_createUser(?,?,?)";
     protected final String UPDATE = "update user set name = ?, email = ?,country_id = ? where user.id = ?;";
-    protected final String SELECTBYID = "SELECT user.*, country.name as countryName, country.id as countryId from user left join country on  user.country_id = country.id where user.id=?;";
+    protected final String SELECTBYID = "call FindById(?)";
     protected final String DELETE_USER = "DELETE FROM user where id = ?";
     protected final String SELECT_BY_COUNTRY = "SELECT user.*, country.name as countryName, country.id as countryId from user left join country on  user.country_id = country.id where country.name = ?";
     protected final String ORDER_BY_NAME = "select user.*, country.`name` as countryName, country.id as countryId from user left join country on user.country_id = country.id order by user.`name` desc ";
@@ -42,12 +40,16 @@ public class UserServiceIpml implements UserService {
 
     @Override
     public void addUser(User data) throws SQLException {
-        try (PreparedStatement statement = conService.getConnection().prepareStatement(INSERT_INTO)) {
+        try {
+            conService.getConnection();
+            CallableStatement statement = conService.getConnection().prepareCall(INSERT_INTO);
             statement.setString(1, data.getName());
             statement.setString(2, data.getEmail());
             statement.setInt(3, data.getCountry().getCountryID());
 
             statement.executeUpdate();
+        }catch (Exception e){
+            e.getMessage();
         }
     }
 
@@ -74,8 +76,11 @@ public class UserServiceIpml implements UserService {
 
     @Override
     public User findById(int data) throws SQLException {
-        try(PreparedStatement statement = conService.getConnection().prepareStatement(SELECTBYID)){
-            User user = new User();
+        User user = new User();
+        try{
+            conService.getConnection();
+            CallableStatement statement = conService.getConnection().prepareCall(SELECTBYID);
+            user = new User();
             statement.setInt(1,data);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
@@ -89,8 +94,10 @@ public class UserServiceIpml implements UserService {
                 user = new User(id, name, email, country);
 
             }
-            return user;
+        }catch (Exception e){
+            e.getMessage();
         }
+        return user;
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class BaseDAO {
+public class ConnDAO {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "Nguyenhai@0603";
