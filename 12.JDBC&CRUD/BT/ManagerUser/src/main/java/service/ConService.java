@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConService {
+public class ConService{
     private final String jdbcURL = "jdbc:mysql://localhost:3306/manageruser";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "Nguyenhai@0603";

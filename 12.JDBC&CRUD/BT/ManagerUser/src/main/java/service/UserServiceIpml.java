@@ -9,6 +9,7 @@ import java.util.List;
 
 public class UserServiceIpml implements UserService {
     ConService conService = new ConService();
+    Connection connection=null;
 
     protected final String SELECT_ALL = "call showAll()";
     protected final String INSERT_INTO = "call sp_createUser(?,?,?)";
@@ -21,7 +22,7 @@ public class UserServiceIpml implements UserService {
     public List<User> showAll() throws SQLException {
         List<User> userList = new ArrayList<>();
         try {
-            conService.getConnection();
+            connection=conService.getConnection();
             CallableStatement statement = conService.getConnection().prepareCall(SELECT_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -34,7 +35,6 @@ public class UserServiceIpml implements UserService {
                 Country country = new Country(countryId, countryName);
                 User user = new User(id, name, email, country);
                 userList.add(user);
-
             }
         }catch (Exception e){
             e.getMessage();
@@ -45,15 +45,24 @@ public class UserServiceIpml implements UserService {
     @Override
     public void addUser(User data) throws SQLException {
         try {
-            conService.getConnection();
+            connection = conService.getConnection();
+            connection.setAutoCommit(false);
             CallableStatement statement = conService.getConnection().prepareCall(INSERT_INTO);
             statement.setString(1, data.getName());
             statement.setString(2, data.getEmail());
             statement.setInt(3, data.getCountry().getCountryID());
 
             statement.executeUpdate();
+            connection.commit();
+
+            connection.setAutoCommit(true);
+            connection.close();
+
         }catch (Exception e){
             e.getMessage();
+            connection.rollback();
+            connection.setAutoCommit(true);
+            connection.close();
         }
     }
 
